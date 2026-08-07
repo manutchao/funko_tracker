@@ -3,6 +3,7 @@
 BoxLayout:
     orientation: "vertical"
 
+
     MDTopAppBar:
         title: "My KivyMD App"
         elevation: 10
@@ -10,6 +11,7 @@ BoxLayout:
         right_action_items: [['dots-vertical', lambda x: app.on_menu_pressed()]]
         size_hint_y: None
         height: dp(56)
+
 
     ScreenManager:
         id: screen_manager
@@ -29,9 +31,11 @@ BoxLayout:
         ContentItemScreen:
             name: "content_item"
 
+
     MDBottomNavigation:
         size_hint_y: None
         height: dp(56)
+
 
         MDBottomNavigationItem:
             name: "tab_accueil"
@@ -56,4 +60,3 @@ BoxLayout:
             text: "Scanner"
             icon: "barcode-scan"
             on_tab_press: screen_manager.current = "scanner"
-

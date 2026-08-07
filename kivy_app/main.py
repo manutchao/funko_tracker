@@ -15,6 +15,7 @@ from screens.content_item import ContentItemScreen
 from screens.database import DatabaseScreen
 from screens.saisie_manuelle import SaisieManuelleScreen
 from screens.scanner import ScannerScreen
+from kivy.uix.screenmanager import ScreenManager, NoTransition
 
 # Window.size = (400, 800)  # Largeur, Hauteur
 
@@ -32,6 +33,7 @@ class MainApp(MDApp):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
         self.title = "Funko Tracker"
+        
     def build(self):
         """Build app."""
         self.theme_cls.theme_style = "Dark"
@@ -42,8 +44,15 @@ class MainApp(MDApp):
         Builder.load_file(os.path.join(KV_DIR, "saisie_manuelle.kv"))
         Builder.load_file(os.path.join(KV_DIR, "scanner.kv"))
         Builder.load_file(os.path.join(KV_DIR, "content_item.kv"))
-        return Builder.load_file(os.path.join(KV_DIR, "main.kv"))
 
+        root = Builder.load_file(os.path.join(KV_DIR, "main.kv"))
+
+        # Désactive uniquement les vrais ScreenManager
+        for widget in root.walk():
+            if isinstance(widget, ScreenManager):
+                widget.transition = NoTransition()
+
+        return root
 
     def on_start(self):
         """Log app start."""
