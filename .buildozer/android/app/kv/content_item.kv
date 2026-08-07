@@ -1,0 +1,101 @@
+<ContentItemScreen>:
+    name: 'content_item'
+
+    MDBoxLayout:
+        orientation: 'vertical'
+        padding: dp(20)
+        spacing: dp(10)
+
+        # Barre de navigation en haut
+        MDBoxLayout:
+            size_hint_y: None
+            height: dp(48)
+            padding: [0, 0, 0, 0]
+            spacing: dp(10)
+
+            MDIconButton:
+                icon: "arrow-left"
+                theme_text_color: "Custom"
+                text_color: "white"
+                on_release:
+                    app.root.current = 'database'
+
+            MDLabel:
+                text: "Détails Funko"
+                halign: "center"
+                valign: "middle"
+                bold: True
+
+        ScrollView:
+            id: scroll_fields
+            size_hint_y: 1
+            do_scroll_x: False
+            do_scroll_y: True
+
+            MDBoxLayout:
+                id: fields_box
+                orientation: 'vertical'
+                spacing: dp(10)
+                size_hint_y: None
+                height: self.minimum_height
+
+                MDTextField:
+                    id: field_name
+                    hint_text: "Nom"
+                    text: ""
+                    disabled: True
+                    mode: "rectangle"
+                    size_hint_y: None
+                    height: dp(40)
+
+                MDTextField:
+                    id: field_license
+                    hint_text: "Licence"
+                    text: ""
+                    disabled: True
+                    mode: "rectangle"
+                    size_hint_y: None
+                    height: dp(40)
+
+                MDTextField:
+                    id: field_barcode
+                    hint_text: "Code-Barre"
+                    text: ""
+                    disabled: True
+                    mode: "rectangle"
+                    size_hint_y: None
+                    height: dp(40)
+
+                MDTextField:
+                    id: field_number
+                    hint_text: "Numéro"
+                    text: ""
+                    disabled: True
+                    mode: "rectangle"
+                    size_hint_y: None
+                    height: dp(40)
+
+        # Boutons fixes en bas
+        BoxLayout:
+            orientation: 'horizontal'
+            spacing: dp(20)
+            size_hint_y: None
+            height: dp(48)
+            pos_hint: {"center_x": 0.5}
+
+            MDRectangleFlatButton:
+                id: edit_button
+                text: "Modifier"
+                theme_text_color: "Custom"
+                text_color: "white"
+                line_color: "green"
+                on_release:
+                    if root.edit_mode: root.save_item()
+                    else: root.edit_item()
+
+            MDRectangleFlatButton:
+                text: "Supprimer"
+                theme_text_color: "Custom"
+                text_color: "white"
+                line_color: "red"
+                on_release: root.delete_item()

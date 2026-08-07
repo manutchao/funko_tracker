@@ -1,0 +1,19 @@
+<ScannerScreen>:
+    name: 'scanner'
+    orientation: "vertical"
+    padding: 10
+    spacing: 10
+
+    MDRaisedButton:
+        text: "Démarrer le scan"
+        pos_hint: {"center_x": 0.5}
+        on_release: root.start_scan(self)
+
+    BoxLayout:
+        id: zbarcam_layout
+        orientation: "vertical"
+        size_hint_y: None
+        height: 0
+
+        ZBarCam:
+            id: zbarcam

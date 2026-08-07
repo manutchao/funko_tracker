@@ -1,0 +1,59 @@
+#:import dp kivy.metrics.dp
+
+BoxLayout:
+    orientation: "vertical"
+
+    MDTopAppBar:
+        title: "My KivyMD App"
+        elevation: 10
+        left_action_items: [['menu', lambda x: app.on_menu_pressed()]]
+        right_action_items: [['dots-vertical', lambda x: app.on_menu_pressed()]]
+        size_hint_y: None
+        height: dp(56)
+
+    ScreenManager:
+        id: screen_manager
+
+        AccueilScreen:
+            name: "accueil"
+
+        DatabaseScreen:
+            name: "database"
+
+        SaisieManuelleScreen:
+            name: "saisie_manuelle"
+
+        ScannerScreen:
+            name: "scanner"
+
+        ContentItemScreen:
+            name: "content_item"
+
+    MDBottomNavigation:
+        size_hint_y: None
+        height: dp(56)
+
+        MDBottomNavigationItem:
+            name: "tab_accueil"
+            text: "Accueil"
+            icon: "home"
+            on_tab_press: screen_manager.current = "accueil"
+
+        MDBottomNavigationItem:
+            name: "tab_database"
+            text: "Database"
+            icon: "database"
+            on_tab_press: screen_manager.current = "database"
+
+        MDBottomNavigationItem:
+            name: "tab_saisie"
+            text: "Saisie"
+            icon: "pencil"
+            on_tab_press: screen_manager.current = "saisie_manuelle"
+
+        MDBottomNavigationItem:
+            name: "tab_scanner"
+            text: "Scanner"
+            icon: "barcode-scan"
+            on_tab_press: screen_manager.current = "scanner"
+

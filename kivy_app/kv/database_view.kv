@@ -1,0 +1,26 @@
+<DatabaseView>:
+    orientation: "vertical"
+
+    MDScrollView:
+        MDList:
+            id: data_list
+            size_hint_y: None
+            height: self.minimum_height
+
+    MDBoxLayout:
+        size_hint_y: None
+        height: dp(56)
+        spacing: dp(12)
+
+        MDRaisedButton:
+            text: "Previous"
+            on_release: root.previous_page()
+
+        MDLabel:
+            id: page_label
+            text: "Page 1"
+            halign: "center"
+
+        MDRaisedButton:
+            text: "Next"
+            on_release: root.next_page()

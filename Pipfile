@@ -1,0 +1,36 @@
+[[source]]
+url = "https://pypi.org/simple"
+verify_ssl = true
+name = "pypi"
+
+[packages]
+black = "*"
+bandit = "*"
+isort = "*"
+vulture = "*"
+kivy = "*"
+kivymd = "*"
+invoke = "*"
+buildozer = "*"
+ffpyplayer = "*"
+python-for-android = "*"
+"kivy-garden.zbarcam" = "*"
+kivy-garden-qrcode = "*"
+kivy-garden-xcamera = "*"
+pillow = "*"
+cmake = "*"
+pylint = "*"
+kivy-garden = "*"
+plyer = "*"
+cython = "==0.29.36"
+jnius = "*"
+materialyoucolor = "*"
+pyjnius = "*"
+opencv-python = "*"
+pyqt5 = "*"
+
+[dev-packages]
+
+[requires]
+python_version = "3.10"
+python_full_version = "3.10.0"

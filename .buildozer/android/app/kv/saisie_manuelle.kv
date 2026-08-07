@@ -1,0 +1,66 @@
+#:import dp kivy.metrics.dp
+
+<SaisieManuelleScreen>:
+    name: 'saisie_manuelle'
+
+    ScrollView:
+        do_scroll_x: False
+        do_scroll_y: True
+        padding: [0, 0, 0, dp(16)]
+
+        BoxLayout:
+            orientation: 'vertical'
+            padding: dp(10)
+            spacing: dp(10)
+            size_hint_y: None
+            height: self.minimum_height
+
+            MDTextField:
+                id: field_name
+                hint_text: "Saisir le nom"
+                mode: "rectangle"
+
+            MDTextField:
+                id: field_license
+                hint_text: "Saisir la licence"
+                mode: "rectangle"
+
+            MDTextField:
+                id: field_barcode
+                hint_text: "Saisir le code barre"
+                mode: "rectangle"
+
+            MDTextField:
+                id: field_number
+                hint_text: "Saisir le numéro"
+                mode: "rectangle"
+
+            AnchorLayout:
+                size_hint_y: None
+                height: dp(50)
+                anchor_x: 'center'
+                anchor_y: 'center'
+
+                BoxLayout:
+                    orientation: 'horizontal'
+                    size_hint: None, None
+                    size: self.minimum_size
+                    spacing: dp(20)
+
+                    MDRectangleFlatButton:
+                        text: "Valider"
+                        theme_text_color: "Custom"
+                        text_color: "white"
+                        line_color: "green"
+                        on_release: root.validate_form()
+
+                    MDRectangleFlatButton:
+                        text: "Effacer"
+                        theme_text_color: "Custom"
+                        text_color: "white"
+                        line_color: "red"
+                        on_release:
+                            field_name.text = ""
+                            field_license.text = ""
+                            field_barcode.text = ""
+                            field_number.text = ""
