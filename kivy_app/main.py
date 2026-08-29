@@ -1,13 +1,10 @@
-import os
-os.environ["KIVY_NO_CONFIG"] = "1"
-
-from kivymd.app import MDApp
-
-
 import logging
 import os
+
+os.environ["KIVY_NO_CONFIG"] = "1"
+
 from kivy.lang import Builder
-from kivy.uix.screenmanager import ScreenManager
+from kivy.uix.screenmanager import NoTransition, ScreenManager
 from kivymd.app import MDApp
 
 from screens.accueil import AccueilScreen
@@ -15,16 +12,9 @@ from screens.content_item import ContentItemScreen
 from screens.database import DatabaseScreen
 from screens.saisie_manuelle import SaisieManuelleScreen
 from screens.scanner import ScannerScreen
-from kivy.uix.screenmanager import ScreenManager, NoTransition
-
-# Window.size = (400, 800)  # Largeur, Hauteur
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 KV_DIR = os.path.join(BASE_DIR, "kv")
-
-
-class MyScreenManager(ScreenManager):
-    """Screen Manager."""
 
 
 class MainApp(MDApp):
@@ -33,7 +23,7 @@ class MainApp(MDApp):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
         self.title = "Funko Tracker"
-        
+
     def build(self):
         """Build app."""
         self.theme_cls.theme_style = "Dark"
@@ -47,7 +37,6 @@ class MainApp(MDApp):
 
         root = Builder.load_file(os.path.join(KV_DIR, "main.kv"))
 
-        # Désactive uniquement les vrais ScreenManager
         for widget in root.walk():
             if isinstance(widget, ScreenManager):
                 widget.transition = NoTransition()
@@ -61,5 +50,3 @@ class MainApp(MDApp):
 
 if __name__ == "__main__":
     MainApp().run()
-
-

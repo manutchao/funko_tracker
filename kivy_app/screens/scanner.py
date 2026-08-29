@@ -1,7 +1,6 @@
-"""Scanner screen.""" ""
+"""Scanner screen."""
 import logging
 
-from kivy.lang import Builder
 from kivy_garden.zbarcam import ZBarCam
 from kivymd.uix.screen import MDScreen
 

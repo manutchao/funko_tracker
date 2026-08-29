@@ -1,4 +1,4 @@
-from fastapi import APIRouter, HTTPException, Query, Path
+from fastapi import APIRouter, HTTPException, Query
 from bson import ObjectId
 from datetime import datetime
 from app.database import funkos_collection
