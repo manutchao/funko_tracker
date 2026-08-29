@@ -84,3 +84,17 @@ def update_funko(funko_id: str, funko_data: dict):
     updated_funko = funkos_collection.find_one({"_id": obj_id})
     updated_funko["_id"] = str(updated_funko["_id"])
     return {"status": "ok", "data": updated_funko}
+
+
+@router.delete("/{funko_id}")
+def delete_funko(funko_id: str):
+    try:
+        obj_id = ObjectId(funko_id)
+    except Exception:
+        raise HTTPException(status_code=400, detail="ID invalide")
+
+    result = funkos_collection.delete_one({"_id": obj_id})
+    if result.deleted_count == 0:
+        raise HTTPException(status_code=404, detail="Funko non trouvée")
+
+    return {"status": "ok"}

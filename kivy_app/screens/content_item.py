@@ -1,11 +1,13 @@
-from kivy.clock import Clock
-
-from kivymd.uix.screen import MDScreen
-from kivymd.uix.snackbar import Snackbar
-from kivymd.uix.dialog import MDDialog
-from kivymd.uix.button import MDFlatButton
+import threading
 
 import requests
+
+from kivy.clock import Clock
+
+from kivymd.uix.button import MDFlatButton
+from kivymd.uix.dialog import MDDialog
+from kivymd.uix.screen import MDScreen
+from kivymd.uix.snackbar import Snackbar
 
 from app.config import API_BASE_URL
 
@@ -149,26 +151,37 @@ class ContentItemScreen(MDScreen):
     def confirm_delete(self, dialog, funko_id):
         """Confirmation suppression."""
 
-        try:
-            response = requests.delete(
-                f"{API_BASE_URL}/funkos/{funko_id}",
-                timeout=10
-            )
+        def run():
+            try:
+                response = requests.delete(
+                    f"{API_BASE_URL}/funkos/{funko_id}",
+                    timeout=10,
+                )
+                response.raise_for_status()
 
-            response.raise_for_status()
+                def on_success(_dt):
+                    dialog.dismiss()
+                    self.original_data = None
+                    self.edit_mode = False
+                    if "edit_button" in self.ids:
+                        self.ids.edit_button.text = "Modifier"
+                    self.show_snackbar("Funko supprimée")
+                    self.manager.current = "database"
 
-            dialog.dismiss()
+                Clock.schedule_once(on_success, 0)
 
-            self.show_snackbar("Funko supprimée 🗑️")
+            except requests.RequestException as e:
+                error = str(e)
 
-            self.manager.current = "database"
+                def on_error(_dt):
+                    dialog.dismiss()
+                    self.show_snackbar(
+                        f"Erreur lors de la suppression : {error}"
+                    )
 
-        except requests.RequestException as e:
-            dialog.dismiss()
+                Clock.schedule_once(on_error, 0)
 
-            self.show_snackbar(
-                f"Erreur lors de la suppression : {e}"
-            )
+        threading.Thread(target=run, daemon=True).start()
 
     def show_snackbar(self, message: str):
         Snackbar(
