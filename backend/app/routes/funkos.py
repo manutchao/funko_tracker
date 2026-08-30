@@ -1,4 +1,4 @@
-from fastapi import APIRouter, HTTPException, Query
+from fastapi import APIRouter, HTTPException, Query, Body
 from bson import ObjectId
 from datetime import datetime
 from app.database import funkos_collection
@@ -64,16 +64,14 @@ def get_funko_by_barcode(barcode: str):
 
 
 @router.patch("/{funko_id}")
-def update_funko(funko_id: str, funko_data: dict):
+def update_funko(funko_id: str, funko_data: dict = Body(...)):
     """
     Met à jour une Funko par son _id.
     funko_id : str (ObjectId en string)
     funko_data : dict contenant les champs à mettre à jour
     """
     try:
-        print(funko_id)
-        obj_id = ObjectId(funko_id)  # conversion string -> ObjectId
-        print(obj_id)
+        obj_id = ObjectId(funko_id)
     except Exception:
         raise HTTPException(status_code=400, detail="ID invalide")
 
@@ -82,6 +80,8 @@ def update_funko(funko_id: str, funko_data: dict):
         raise HTTPException(status_code=404, detail="Funko non trouvée")
 
     updated_funko = funkos_collection.find_one({"_id": obj_id})
+    if not updated_funko:
+        raise HTTPException(status_code=500, detail="Funko updated but not found")
     updated_funko["_id"] = str(updated_funko["_id"])
     return {"status": "ok", "data": updated_funko}
 

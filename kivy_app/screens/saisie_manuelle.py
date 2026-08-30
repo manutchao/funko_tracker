@@ -12,6 +12,8 @@ from kivymd.uix.dialog import MDDialog
 from kivymd.uix.screen import MDScreen
 from kivymd.uix.snackbar import Snackbar
 
+from app.config import API_BASE_URL
+
 
 logger = logging.getLogger("SaisieManuelleScreen")
 logger.setLevel(logging.DEBUG)
@@ -37,8 +39,7 @@ if platform == "android":
     )
 
 
-API_BASE_URL = "http://192.168.1.13:8000"
-FUNKO_ENDPOINT = f"{API_BASE_URL}/funkos/"
+FUNKO_ENDPOINT = f"{API_BASE_URL}/funkos"
 
 
 class SaisieManuelleScreen(MDScreen):
