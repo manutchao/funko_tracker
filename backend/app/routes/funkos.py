@@ -1,9 +1,11 @@
+import logging
 from fastapi import APIRouter, HTTPException, Query, Body
 from bson import ObjectId
 from datetime import datetime
 from app.database import funkos_collection
 from app.models.funkos import FunkoCreate
 
+logger = logging.getLogger(__name__)
 router = APIRouter()
 
 
@@ -16,7 +18,8 @@ def create_funko(funko: FunkoCreate):
         doc["_id"] = str(result.inserted_id)
         return {"status": "ok", "data": doc}
     except Exception as e:
-        raise HTTPException(status_code=500, detail=str(e))
+        logger.error(f"Error creating funko: {e}", exc_info=True)
+        raise HTTPException(status_code=500, detail="Failed to create funko")
 
 
 @router.get("/")
@@ -49,7 +52,8 @@ def get_funkos(
         }
 
     except Exception as e:
-        raise HTTPException(status_code=500, detail=str(e))
+        logger.error(f"Error fetching funkos (page={page}, limit={limit}): {e}", exc_info=True)
+        raise HTTPException(status_code=500, detail="Failed to fetch funkos")
 
 
 @router.get("/barcode/{barcode}")
@@ -59,8 +63,11 @@ def get_funko_by_barcode(barcode: str):
         if not funko:
             raise HTTPException(status_code=404, detail="Funko non trouvé")
         return {"status": "ok", "data": funko}
+    except HTTPException:
+        raise
     except Exception as e:
-        raise HTTPException(status_code=500, detail=str(e))
+        logger.error(f"Error fetching funko by barcode '{barcode}': {e}", exc_info=True)
+        raise HTTPException(status_code=500, detail="Failed to fetch funko")
 
 
 @router.patch("/{funko_id}")
