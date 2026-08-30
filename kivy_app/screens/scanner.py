@@ -6,7 +6,7 @@ from kivymd.uix.screen import MDScreen
 
 
 class ScannerScreen(MDScreen):
-    """Scanner screen.""" ""
+    """Scanner screen."""
 
     def __init__(self, app=None, **kwargs):
         super().__init__(**kwargs)

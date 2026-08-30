@@ -47,6 +47,25 @@ class MainApp(MDApp):
         """Log app start."""
         logging.debug("App has started")
 
+    def on_symbols(self, instance, symbols):
+        """
+        Callback for barcode scan event from ZBarCam.
+        Receives a list of detected barcodes and navigates to database screen.
+        """
+        if not symbols:
+            return
+
+        barcode = symbols[0]
+        barcode_value = barcode.get("decoded") or str(barcode)
+        logging.info(f"Barcode scanned: {barcode_value}")
+
+        root = self.root
+        if root:
+            root.current = "database"
+            database_screen = root.get_screen("database")
+            if database_screen and hasattr(database_screen, "search_by_barcode"):
+                database_screen.search_by_barcode(barcode_value)
+
 
 if __name__ == "__main__":
     MainApp().run()

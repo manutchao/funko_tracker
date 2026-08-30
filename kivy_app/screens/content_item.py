@@ -66,10 +66,13 @@ class ContentItemScreen(MDScreen):
             self.show_snackbar("Impossible de sauvegarder : ID manquant")
             return
 
-        mongo_id = self.original_data["_id"]
+        mongo_id = self.original_data.get("_id")
+        if not mongo_id:
+            self.show_snackbar("Erreur : ID invalide")
+            return
 
         funko_id = (
-            mongo_id["$oid"]
+            mongo_id.get("$oid")
             if isinstance(mongo_id, dict) and "$oid" in mongo_id
             else str(mongo_id)
         )
@@ -118,10 +121,13 @@ class ContentItemScreen(MDScreen):
             self.show_snackbar("Impossible de supprimer : ID manquant")
             return
 
-        mongo_id = self.original_data["_id"]
+        mongo_id = self.original_data.get("_id")
+        if not mongo_id:
+            self.show_snackbar("Erreur : ID invalide")
+            return
 
         funko_id = (
-            mongo_id["$oid"]
+            mongo_id.get("$oid")
             if isinstance(mongo_id, dict) and "$oid" in mongo_id
             else str(mongo_id)
         )

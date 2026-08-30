@@ -1,5 +1,10 @@
 # config.py
 import os
+import logging
+
+# Configure logging
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger("config")
 
 # Détecte si on est sur Android (Kivy APK)
 try:
@@ -26,5 +31,6 @@ else:
     # Production
     API_BASE_URL = "https://api.tonapp.railway.app"
 
-# Optionnel : debug
-print(f"[CONFIG] APP_ENV = {APP_ENV}, API_BASE_URL = {API_BASE_URL}")
+# Log config at DEBUG level (only shown when logging is configured)
+logger.debug(f"APP_ENV = {APP_ENV}, API_BASE_URL = {API_BASE_URL}")
+

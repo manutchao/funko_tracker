@@ -1,24 +1,29 @@
 <DatabaseScreen>:
     BoxLayout:
         orientation: "vertical"
-        padding: dp(8)
-        spacing: dp(8)
+        padding: [dp(8), dp(8), dp(8), dp(20)]
+        spacing: dp(12)
 
         # Zone scrollable (prend le reste de l'écran)
         ScrollView:
             size_hint_y: 1
             bar_width: dp(8)
-            padding: [0, 0, 0, dp(56)]  # <-- clé du problème
+            padding: [0, 0, 0, dp(56)]
 
             MDList:
                 id: data_list
+
+        # Spacer pour séparer du footer
+        Widget:
+            size_hint_y: None
+            height: dp(12)
 
         # Footer FIXE
         MDBoxLayout:
             size_hint_y: None
             height: dp(64)
             spacing: dp(12)
-            padding: [dp(12), dp(8)]
+            padding: [dp(12), dp(8), dp(12), dp(16)]
             md_bg_color: app.theme_cls.bg_dark
 
             MDRaisedButton:

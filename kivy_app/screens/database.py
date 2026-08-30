@@ -72,9 +72,10 @@ class DatabaseScreen(MDScreen):
 
                 response.raise_for_status()
 
-
-                data = response.json()
-
+                try:
+                    data = response.json()
+                except ValueError as json_err:
+                    raise ValueError(f"Invalid JSON response from server: {json_err}")
 
                 funkos = data.get(
                     "data",
@@ -93,6 +94,18 @@ class DatabaseScreen(MDScreen):
                 )
 
 
+            except requests.RequestException as req_err:
+                error = f"Network error: {req_err}"
+                Clock.schedule_once(
+                    lambda dt: self.show_error(error),
+                    0
+                )
+            except ValueError as val_err:
+                error = f"Data error: {val_err}"
+                Clock.schedule_once(
+                    lambda dt: self.show_error(error),
+                    0
+                )
             except Exception as e:
 
                 # Important :
